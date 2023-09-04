@@ -1,7 +1,7 @@
 <script setup>
 import { toRefs } from "vue";
 import { useApiStore } from "src/stores";
-// import buttonGroup from "./buttonGroup.vue";
+import buttonGroup from "./buttonGroup.vue";
 const store = useApiStore();
 const props = defineProps({
   product: {
@@ -24,14 +24,14 @@ const { product } = toRefs(props);
       </div>
     </div>
     <div class="card__img">
-      <!-- <p v-if="product.images[0]?.image">rasm</p>
+      <!-- <p v-if="product.images[0]?.image">rasm</p> -->
       <q-img
-        :src="product.images[0]?.image_link"
+        :src="`${store.hostName}/${product.image}`"
         :alt="product.name"
         class="img"
         :ratio="16 / 9"
-        v-else
-      /> -->
+        v-if="product.image"
+      />
     </div>
     <div class="title q-pa-sm text-weight-thin text-uppercase">
       {{ product.name }}
@@ -42,11 +42,8 @@ const { product } = toRefs(props);
       </div>
       <div class="card__price_new text-red">{{ product.price }} so'm</div>
     </div>
-    <div
-      class="counter row justify-between items-center"
-      v-if="product.quantity > 0"
-    >
-      <!-- <button-group :product="product" /> -->
+    <div class="counter row items-center" v-if="product.quantity > 0">
+      <button-group :product="product" />
     </div>
     <div class="counter text-center text-grey" v-else>
       Buyurtma berilmagan... Buyurtma berish uchun <br />"Sotib olish tugmasini

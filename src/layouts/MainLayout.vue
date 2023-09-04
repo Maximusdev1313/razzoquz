@@ -21,8 +21,8 @@
           </router-link>
 
           <router-link to="/search" class="search-input gt-sm">
-            <!-- <q-input
-              v-model="store.searchInput"
+            <q-input
+              v-model="searchTermByName"
               filled
               type="search"
               class="input_header"
@@ -34,23 +34,25 @@
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
-            </q-input> -->
+            </q-input>
           </router-link>
-          <!-- <div class="flex items-center justify-around">
-            <div
-              class="q-mr-sm dialog"
-              v-if="store.dialog && store.amount < 10000"
-            >
+          {{ searchTermByName }}
+          <div class="flex items-center justify-around">
+            <div class="q-mr-sm dialog" v-if="store.amount < 10000">
               Minimal 10 000 so'm
-            </div> -->
-          <!-- <q-btn icon="shopping_cart" to="/order" class="text-white">
+            </div>
+            <q-btn
+              icon="shopping_cart"
+              to="/order"
+              class="text-white text-weight-bold"
+            >
               <q-badge color="red" floating>{{
                 store.purchasedProducts.length
               }}</q-badge>
               {{ store.amount }}
-            </q-btn> -->
+            </q-btn>
+          </div>
         </div>
-        <!-- </div> -->
       </q-toolbar>
     </q-header>
 
@@ -70,7 +72,7 @@
     >
       <router-link to="/search" class="search-input">
         <q-input
-          v-model="store.searchInput"
+          v-model="searchTermByName"
           rounded
           outlined
           label="Mahsulot qidirish"
@@ -99,17 +101,25 @@ const router = useRouter();
 
 const route = useRoute();
 
+const searchTermByName = ref("");
+async function getFilteredData() {
+  const filteredData = await store.filterData(searchTermByName.value);
+  console.log(filteredData);
+  // Cut the last 10 objects
+  store.filteredData = filteredData.slice(-10);
+}
+
 const path = computed(() => route.path);
 const leftDrawerOpen = ref(false);
 const store = useApiStore();
 // store.getCategory();
 
-// watch(
-//   () => store.searchInput,
-//   function () {
-//     store.searchProduct();
-//   }
-// );
+watch(
+  () => searchTermByName.value,
+  function () {
+    getFilteredData();
+  }
+);
 // watch(
 //   () => path.value,
 //   function () {}
