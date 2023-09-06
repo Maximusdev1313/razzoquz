@@ -15,7 +15,8 @@ export const useApiStore = defineStore('store', {
     prevGramAmount: 0,
     priceNonDiscount: 0,
     priceWithDiscount: 0,
-    filteredData: []
+    filteredData: [],
+    clientId: null
   }),
   actions: {
     async getData(url) {
@@ -31,7 +32,8 @@ export const useApiStore = defineStore('store', {
       try {
         const response = await axios.post(`${this.hostName}/api/products/filter-data?q=${query}`)
         console.log(response.data);
-        return response.data
+        const minimizedProducts = response.data
+        return minimizedProducts
       } catch (error) {
         console.log(error);
 
@@ -100,6 +102,11 @@ export const useApiStore = defineStore('store', {
         this.priceWithDiscount = item.quantity * item.price;
 
       }
+    },
+
+
+    setId() {
+      this.clientId = Date.now() + Math.floor(Math.random() * 10000).toString();
     },
 
   },

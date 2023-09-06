@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useApiStore } from "src/stores";
 import axios from "axios";
+import { useRouter } from "vue-router";
 const store = useApiStore();
 
 const userName = ref("");
@@ -10,39 +11,94 @@ const address = ref("");
 const comment = ref("");
 
 const postClientInfo = async () => {
+  store.setId();
   try {
     const response = await axios.post(`${store.hostName}/api/orders`, {
-      clientId: "51548",
-      name: "alimashrab",
-      phone_number: 5412131,
-      address: "address.value",
-      total_order_price: 829827,
-      comment: "comment.value",
+      clientId: store.clientId,
+      name: userName.value,
+      phone_number: phoneNumber.value,
+      address: address.value,
+      total_order_price: "829827",
+      comment: comment.value,
+      location: userLocation.value,
     });
     console.log(response.data);
   } catch (error) {
     console.log(error.message);
   }
 };
-const postOrders = () => {
-  store.purchasedProducts.parent_id = "51548";
+const postOrders = async () => {
   for (let product of store.purchasedProducts) {
     try {
-      const response = axios.post(`${store.hostName}/api/orders/post-orders`, {
-        parent_id: "51548",
-        name: product.name,
-        price: product.price,
-        quantity_in_store: product.quantity_in_store,
-        entry_price: product.entry_price,
-        discount_price: product.discount_price,
-        size: product.size,
-        quantity: product.quantity,
-      });
+      const response = await axios.post(
+        `${store.hostName}/api/orders/post-orders`,
+        {
+          parent_id: store.clientId,
+          name: product.name,
+          price: product.price,
+          quantity_in_store: product.quantity_in_store,
+          entry_price: product.entry_price,
+          discount_price: product.discount_price,
+          size: product.size,
+          quantity: product.quantity,
+        }
+      );
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   }
+};
+
+const userLocation = ref();
+const options = {
+  enableHighAccuracy: false,
+  timeout: 5000,
+  maximumAge: 0,
+};
+const getUserLocation = () => {
+  return new Promise((resolve) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          userLocation.value = `https://maps.google.com/maps/dir/40.318214,71.833028/${position.coords.latitude},${position.coords.longitude}/@40.318231,71.833045.17z`;
+          resolve(userLocation.value);
+        },
+        undefined,
+        options
+      );
+    }
+  });
+};
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function callLocation() {
+  try {
+    const result = await Promise.race([
+      getUserLocation(),
+      delay(5000).then(() => {
+        throw new Error("Timeout");
+      }),
+    ]);
+    console.log(userLocation.value);
+    console.log(result);
+    // handle result
+  } catch (error) {
+    // handle error
+    console.log(error);
+  }
+}
+const router = useRouter();
+
+const changePath = () => {
+  router.push("/new-path");
+};
+
+const sendOrder = async () => {
+  await callLocation();
+  await postClientInfo();
+  await postOrders();
+  changePath();
 };
 </script>
 
@@ -93,7 +149,7 @@ const postOrders = () => {
           >Iltimos locatsiyani olish tugmasini bosing</q-tooltip
         >
       </q-btn> -->
-        <q-btn @click="postOrders()" color="accent"> Buyurtma Berish </q-btn>
+        <q-btn @click="sendOrder()" color="accent"> Buyurtma Berish </q-btn>
       </div>
     </q-form>
   </div>
