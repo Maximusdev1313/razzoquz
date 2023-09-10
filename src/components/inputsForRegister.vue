@@ -18,7 +18,7 @@ const postClientInfo = async () => {
       name: userName.value,
       phone_number: phoneNumber.value,
       address: address.value,
-      total_order_price: "829827",
+      total_order_price: store.amount,
       comment: comment.value,
       location: userLocation.value,
     });

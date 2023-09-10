@@ -107,6 +107,7 @@ export const useApiStore = defineStore('store', {
 
     setId() {
       this.clientId = Date.now() + Math.floor(Math.random() * 10000).toString();
+      sessionStorage.setItem("clientId", this.clientId)
     },
 
   },

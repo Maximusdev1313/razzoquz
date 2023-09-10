@@ -7,6 +7,7 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'order', component: () => import('pages/Order.vue') },
       { path: 'search', component: () => import('pages/SearchPage.vue') },
+      { path: 'wait-room', component: () => import('pages/WaitPage.vue') },
     ]
   },
 
