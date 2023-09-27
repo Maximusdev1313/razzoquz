@@ -45,6 +45,7 @@ export const useApiStore = defineStore('store', {
       increment
       this.purchasedProducts = [...new Set(this.purchasedProducts)]
       this.dialog = true
+      console.log(this.purchasedProducts);
     },
     deleteProduct(item, index) {
       const price = JSON.parse(item.price);
@@ -97,12 +98,13 @@ export const useApiStore = defineStore('store', {
       const price = JSON.parse(item.price);
       if (item.quantity > 1) {
         this.amount -= price;
-        item.quantity--;
+        item.quantity = +((item.quantity - 1).toFixed(2)); // convert string back to number
+        // keep up to 2 decimal places
         this.priceNonDiscount = item.quantity * item.old_price;
         this.priceWithDiscount = item.quantity * item.price;
-
       }
     },
+
 
 
     setId() {

@@ -28,11 +28,13 @@ const postClientInfo = async () => {
   }
 };
 const postOrders = async () => {
+  console.log(store.purchasedProducts);
   for (let product of store.purchasedProducts) {
     try {
       const response = await axios.post(
         `${store.hostName}/api/orders/post-orders`,
         {
+          _id: product._id,
           parent_id: store.clientId,
           name: product.name,
           price: product.price,
@@ -43,7 +45,7 @@ const postOrders = async () => {
           quantity: product.quantity,
         }
       );
-      console.log(response.data);
+      console.log(product);
     } catch (error) {
       console.log(error);
     }
