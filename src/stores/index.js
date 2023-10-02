@@ -6,7 +6,7 @@ import { createPinia, defineStore } from 'pinia'
 import axios from 'axios'
 export const useApiStore = defineStore('store', {
   state: () => ({
-    hostName: 'http://localhost:5000',
+    hostName: 'https://serverrazzoq.onrender.com',
     allProducts: [],
     purchasedProducts: [],
     dialog: false,
