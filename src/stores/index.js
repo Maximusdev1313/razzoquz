@@ -6,7 +6,7 @@ import { createPinia, defineStore } from 'pinia'
 import axios from 'axios'
 export const useApiStore = defineStore('store', {
   state: () => ({
-    hostName: 'https://serverrazzoq.onrender.com',
+    hostName: 'http://localhost:5000',
     allProducts: [],
     purchasedProducts: [],
     dialog: false,
@@ -30,7 +30,7 @@ export const useApiStore = defineStore('store', {
     },
     async filterData(query) {
       try {
-        const response = await axios.post(`${this.hostName}/api/products/filter-data?q=${query}`)
+        const response = await axios.post(`${this.hostName}/api/products/filter-name?q=${query}`)
         console.log(response.data);
         const minimizedProducts = response.data
         return minimizedProducts

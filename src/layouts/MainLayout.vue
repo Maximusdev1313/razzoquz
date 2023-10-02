@@ -36,7 +36,7 @@
               </template>
             </q-input>
           </router-link>
-          {{ searchTermByName }}
+
           <div class="flex items-center justify-around">
             <div class="q-mr-sm dialog" v-if="store.amount < 10000">
               Minimal 10 000 so'm
@@ -106,7 +106,7 @@ async function getFilteredData() {
   const filteredData = await store.filterData(searchTermByName.value);
   console.log(filteredData);
   // Cut the last 10 objects
-  store.filteredData = filteredData.slice(-10);
+  store.filteredData = filteredData?.slice(-10);
 }
 
 const path = computed(() => route.path);

@@ -21,6 +21,7 @@ const postClientInfo = async () => {
       total_order_price: store.amount,
       comment: comment.value,
       location: userLocation.value,
+      created: Date.now(),
     });
     console.log(response.data);
   } catch (error) {
@@ -93,7 +94,7 @@ async function callLocation() {
 const router = useRouter();
 
 const changePath = () => {
-  router.push("/new-path");
+  router.push("/wait-room");
 };
 
 const sendOrder = async () => {
