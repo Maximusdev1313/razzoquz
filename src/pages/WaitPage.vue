@@ -17,5 +17,5 @@ getClientInfo();
 </script>
 
 <template>
-  <q-page> waitpage </q-page>
+  <q-page> hozi togrlab qoyaman batti😁 </q-page>
 </template>
