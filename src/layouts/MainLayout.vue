@@ -11,11 +11,12 @@
           @click="toggleLeftDrawer"
           color="white"
         />
-        <div class="fit row justify-between items-center content-center">
+        <div
+          class="fit row justify-between items-center content-center no-wrap"
+        >
           <router-link to="/" class="link q-ma-md">
             <q-toolbar-title class="text-white text-weight-bold">
-              <span>VALUE</span>
-              <span class="logo">CART</span>
+              <span>RAZZOQ</span>
             </q-toolbar-title>
             <!-- <img src="icons/logo-white.png" alt="Logo" class="logo" /> -->
           </router-link>
@@ -168,5 +169,13 @@ function toggleLeftDrawer() {
   padding: 2px 10px;
   border-radius: 2px;
   transition: 3s;
+}
+@media (max-width: 600px) {
+  .fit {
+    font-size: 10px !important;
+  }
+  .link {
+    font-size: 10px !important;
+  }
 }
 </style>
