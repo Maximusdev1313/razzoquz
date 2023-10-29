@@ -12,6 +12,7 @@ const comment = ref("");
 
 const postClientInfo = async () => {
   store.setId();
+
   try {
     const response = await axios.post(`${store.hostName}/api/orders`, {
       clientId: store.clientId,
@@ -56,7 +57,7 @@ const postOrders = async () => {
 const userLocation = ref();
 const options = {
   enableHighAccuracy: false,
-  timeout: 5000,
+  timeout: 10000,
   maximumAge: 0,
 };
 const getUserLocation = () => {
@@ -79,7 +80,7 @@ async function callLocation() {
   try {
     const result = await Promise.race([
       getUserLocation(),
-      delay(5000).then(() => {
+      delay(10000).then(() => {
         throw new Error("Timeout");
       }),
     ]);
@@ -102,11 +103,39 @@ const sendOrder = async () => {
   await postClientInfo();
   await postOrders();
   changePath();
+  localStorage.setItem("allow", true);
 };
+const alert = ref(localStorage.getItem("allow") ? false : true);
 </script>
 
 <template>
   <div class="user-info q-my-xl q-pa-md">
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section class="flex column items-center justify-center">
+          <div class="title text-center">Iltimos</div>
+          <img src="src/assets/alert.png" alt="" />
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Barcha ma'lumotlaringizni kiritganingizdan so'ng ushbu rasmda ko'rinib
+          turgan oyna ochiladi va siz (rus-> <b>Разрешить</b>, Eng->
+          <b>Allow</b>, Uzb-> <b>Ruxsat berish </b>) tugmasini bosishngiz kerak!
+          <br />
+          Bu orqali biz sizning ayni vaqtda turgan nuqtangizni bilib olamiz va
+          buyurtma yetkazish vaqtini qisqartira olamiz.
+          <span class="text-negative"
+            >Ushbu ma'lumot qayta so'ralmaydi va boshqa maqsadlarga
+            ishlatilmaydi</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <div class="title">Ma'lumotlaringiz</div>
     <q-form>
       <q-input

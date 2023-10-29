@@ -18,6 +18,8 @@ export const useApiStore = defineStore('store', {
     filteredData: [],
     clientId: null
   }),
+  getters: {
+  },
   actions: {
     async getData(url) {
       try {
@@ -38,6 +40,11 @@ export const useApiStore = defineStore('store', {
         console.log(error);
 
       }
+    },
+    async filterItems(_key, value) {
+      return this.allProducts.filter((item) => {
+        return item[_key] == value;
+      });
     },
     addPurchasedProducts(el, increment) {
 
