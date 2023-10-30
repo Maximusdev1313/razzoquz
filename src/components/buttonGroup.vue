@@ -39,9 +39,9 @@ const gramms = [
         label="+"
         @click="store.incrementAmount(product)"
       />
-      <div class="item-count">
+      <div class="item-count flex justify-center items-center">
         {{ product.quantity }}
-        {{ product.size == "Kg" ? "kg" : "Dona" }}
+        {{ product.size == "kg" ? "kg" : "Dona" }}
       </div>
 
       <q-btn
@@ -53,6 +53,7 @@ const gramms = [
       />
     </q-btn-group>
     <q-btn-dropdown
+      v-if="product.size == 'kg'"
       size="sm"
       class="q-mt-sm full-width text-black"
       color="white"

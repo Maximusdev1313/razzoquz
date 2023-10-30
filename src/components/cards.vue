@@ -23,7 +23,13 @@ let slide = ref(1);
         class="q-pa-md wrapper flex justify-between items-center"
         v-if="!products?.length"
       >
-        <q-card flat style="width: 250px" v-for="card in 4" :key="card">
+        <q-card
+          flat
+          style="width: 250px; height: 300px"
+          class="card"
+          v-for="card in 4"
+          :key="card"
+        >
           <q-skeleton height="150px" square />
 
           <q-card-section>
@@ -49,6 +55,9 @@ let slide = ref(1);
   .container {
     width: 98%;
     margin: 10px auto;
+  }
+  .card {
+    width: 47%;
   }
 }
 </style>

@@ -30,7 +30,6 @@ const postClientInfo = async () => {
   }
 };
 const postOrders = async () => {
-  console.log(store.purchasedProducts);
   for (let product of store.purchasedProducts) {
     try {
       const response = await axios.post(
@@ -47,9 +46,8 @@ const postOrders = async () => {
           quantity: product.quantity,
         }
       );
-      console.log(product);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 };
@@ -84,12 +82,10 @@ async function callLocation() {
         throw new Error("Timeout");
       }),
     ]);
-    console.log(userLocation.value);
-    console.log(result);
     // handle result
   } catch (error) {
     // handle error
-    console.log(error);
+    console.log(error.message);
   }
 }
 const router = useRouter();
@@ -114,7 +110,12 @@ const alert = ref(localStorage.getItem("allow") ? false : true);
       <q-card>
         <q-card-section class="flex column items-center justify-center">
           <div class="title text-center">Iltimos</div>
-          <img src="src/assets/alert.png" alt="" />
+          <img
+            src="http://insofuzlast.pythonanywhere.com/media/alert.png"
+            alt=""
+            width="300"
+            height="150"
+          />
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -136,7 +137,7 @@ const alert = ref(localStorage.getItem("allow") ? false : true);
       </q-card>
     </q-dialog>
 
-    <div class="title">Ma'lumotlaringiz</div>
+    <div class="title q-mt-lg">Ma'lumotlaringiz</div>
     <q-form>
       <q-input
         v-model="userName"

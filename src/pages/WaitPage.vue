@@ -10,10 +10,9 @@ const userInfo = ref([]);
 const getClientInfo = async () => {
   try {
     const response = await axios.get(`${store.hostName}/api/orders/${userId}`);
-    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 const statusMessages = {
@@ -29,7 +28,6 @@ const message = ref("");
 setInterval(async () => {
   userInfo.value = await getClientInfo();
   message.value = statusMessages[userInfo.value.status];
-  console.log(userInfo.value);
 }, 6000);
 </script>
 
@@ -41,7 +39,11 @@ setInterval(async () => {
           {{ message }}
         </div>
         <img
-          :src="'src/assets/' + userInfo.status + '.gif'"
+          :src="
+            'https://insofuzlast.pythonanywhere.com/media/' +
+            userInfo.status +
+            '.gif'
+          "
           v-if="userInfo.status"
           alt="wait"
           class=""

@@ -32,6 +32,7 @@ const { product } = toRefs(props);
         :ratio="16 / 9"
         v-if="product.image"
       />
+      <div v-else></div>
     </div>
     <div class="title q-pa-sm text-weight-thin text-uppercase">
       {{ product.name }}

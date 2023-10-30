@@ -1,8 +1,19 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated class="bg-accent">
+      <q-bar class="bar">
+        <q-icon name="phone" />
+        <a href="tel:956432123" class="text-white">95 643 21 23</a>
+        <a href="tel:950912123" class="text-white q-pl-sm">95 091 21 23</a>
+
+        <q-space />
+
+        <div class="info text-uppercase">
+          Xizmatlar faqat Avval hududida amal qiladi!
+        </div>
+      </q-bar>
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           flat
           dense
           round
@@ -10,7 +21,7 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
           color="white"
-        />
+        /> -->
         <div
           class="fit row justify-between items-center content-center no-wrap"
         >
@@ -59,6 +70,7 @@
 
     <q-drawer v-model="leftDrawerOpen" bordered>
       <!-- <drawerContent /> -->
+      <categories />
     </q-drawer>
 
     <q-page-container>
@@ -97,6 +109,7 @@ import { useApiStore } from "src/stores";
 import { useRoute } from "vue-router";
 // import drawerContent from "src/components/drawerContent.vue";
 import { useRouter } from "vue-router";
+import categories from "src/components/categories.vue";
 
 const router = useRouter();
 
@@ -105,7 +118,6 @@ const route = useRoute();
 const searchTermByName = ref("");
 async function getFilteredData() {
   const filteredData = await store.filterData(searchTermByName.value);
-  console.log(filteredData);
   // Cut the last 10 objects
   store.filteredData = filteredData?.slice(-10);
 }
@@ -176,6 +188,17 @@ function toggleLeftDrawer() {
   }
   .link {
     font-size: 10px !important;
+  }
+  /* .bar > div {
+    width: 100px;
+  } */
+  .bar > a {
+    width: 40%;
+  }
+  .bar > div,
+  a {
+    font-size: 10px !important;
+    font-weight: 100;
   }
 }
 </style>

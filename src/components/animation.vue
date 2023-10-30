@@ -1,11 +1,11 @@
 <template>
   <div class="loader">
-    <!-- <img
+    <img
       src="http://insofuzlast.pythonanywhere.com/media/Cloner_Cube_Simple_-_Copy1-1366x657.png"
       alt="cube img"
       class="img"
       v-show="isloading == true"
-    /> -->
+    />
     <!-- <canvas
       id="canvas3d"
       class="canvas"
@@ -14,7 +14,7 @@
     >
     </canvas> -->
     <video-background
-      src="https://prod.spline.design/1zy-A9zhsysJense/scene.splinecode"
+      :src="'https://insofuzlast.pythonanywhere.com/media/entry.mp4'"
       style="max-height: 400px; height: 80vh"
     >
     </video-background>
