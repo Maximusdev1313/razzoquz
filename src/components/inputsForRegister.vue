@@ -55,7 +55,7 @@ const postOrders = async () => {
 const userLocation = ref();
 const options = {
   enableHighAccuracy: false,
-  timeout: 10000,
+  timeout: 5000,
   maximumAge: 0,
 };
 const getUserLocation = () => {
@@ -78,11 +78,13 @@ async function callLocation() {
   try {
     const result = await Promise.race([
       getUserLocation(),
-      delay(10000).then(() => {
+      delay(5000).then(() => {
         throw new Error("Timeout");
       }),
     ]);
     // handle result
+    console.log(userLocation.value);
+    return result;
   } catch (error) {
     // handle error
     console.log(error.message);

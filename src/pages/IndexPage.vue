@@ -9,7 +9,8 @@ const status = ref([]);
 
 const category = ref([]);
 const tea = ref([]);
-
+const makaron = ref([]);
+const parfum = ref([]);
 onBeforeMount(async () => {
   await store.getData("api/products");
   status.value = await store
@@ -17,10 +18,16 @@ onBeforeMount(async () => {
     .then((app) => app);
   category.value = await store
     .filterItems("category", "Yog'lar")
-    .then((app) => app.slice(-4));
+    .then((app) => app.slice(0, 4));
   tea.value = await store
     .filterItems("category", "Choylar")
-    .then((app) => app.slice(-4));
+    .then((app) => app.slice(0, 4));
+  makaron.value = await store
+    .filterItems("category", "Makaron mahsulotlari")
+    .then((app) => app.slice(0, 4));
+  parfum.value = await store
+    .filterItems("category", "Parfumeriya mahsulotlari")
+    .then((app) => app.slice(0, 12));
 });
 </script>
 
@@ -42,6 +49,14 @@ onBeforeMount(async () => {
       <div class="title q-ma-md">Choylar</div>
       <Suspense>
         <cards class="" :products="tea" />
+      </Suspense>
+      <div class="title q-ma-md">Makaron mahsulotlari</div>
+      <Suspense>
+        <cards class="" :products="makaron" />
+      </Suspense>
+      <div class="title q-ma-md">Parfumeriya mahsulotlari</div>
+      <Suspense>
+        <cards class="" :products="parfum" />
       </Suspense>
     </div>
   </q-page>
