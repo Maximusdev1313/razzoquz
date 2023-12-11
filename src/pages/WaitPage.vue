@@ -1,8 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useApiStore } from "src/stores";
 import axios from "axios";
-import ordersList from "src/components/ordersList.vue";
 import lists from "src/components/lists.vue";
 const store = useApiStore();
 const userId = sessionStorage.getItem("clientId");
@@ -24,7 +23,10 @@ const statusMessages = {
 };
 
 const message = ref("");
-
+onBeforeMount(async () => {
+  userInfo.value = await getClientInfo();
+  message.value = statusMessages[userInfo.value.status];
+});
 setInterval(async () => {
   userInfo.value = await getClientInfo();
   message.value = statusMessages[userInfo.value.status];
@@ -33,7 +35,7 @@ setInterval(async () => {
 
 <template>
   <q-page>
-    <div class="wrapper" v-if="userInfo">
+    <div class="wrapper" v-if="userInfo?.total_order_price">
       <div class="card shadow-1">
         <div class="card__title title text-center q-mt-md">
           {{ message }}

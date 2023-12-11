@@ -24,20 +24,17 @@ export const useApiStore = defineStore('store', {
     async getData(url) {
       try {
         let response = await axios.get(`${this.hostName}/${url}`)
-        // console.log(response.data);
         this.allProducts = response.data
       } catch (error) {
-        console.log(error);
+
       }
     },
     async filterData(query) {
       try {
         const response = await axios.post(`${this.hostName}/api/products/filter-name?q=${query}`)
-        console.log(response.data);
         const minimizedProducts = response.data
         return minimizedProducts
       } catch (error) {
-        console.log(error);
 
       }
     },
@@ -52,7 +49,6 @@ export const useApiStore = defineStore('store', {
       increment
       this.purchasedProducts = [...new Set(this.purchasedProducts)]
       this.dialog = true
-      console.log(this.purchasedProducts);
     },
     deleteProduct(item, index) {
       const price = JSON.parse(item.price);
@@ -76,7 +72,6 @@ export const useApiStore = defineStore('store', {
         const priceWithGram = item.price * gram;
         this.amount += priceWithGram;
         this.prevGram = gram
-        console.log(gram, priceWithGram, 'pr');
         // Update previous gram amount
 
         this.prevGramAmount = priceWithGram;
@@ -88,7 +83,6 @@ export const useApiStore = defineStore('store', {
       else if (gram === 0) {
         // Subtract previous gram amount from total
         let decimalPart = item.quantity - Math.floor(item.quantity);
-        console.log(decimalPart, 'dec');
         item.quantity = item.quantity - decimalPart
 
         this.amount -= decimalPart * item.price

@@ -16,7 +16,7 @@ const isDone = ref(false);
       </q-btn>
       <q-btn
         size="sm"
-        color="primary"
+        color="green"
         icon-right="arrow_forward"
         @click="isDone = !isDone"
         :disable="store.purchasedProducts.length == 0"
@@ -33,6 +33,6 @@ const isDone = ref(false);
     <purchasedProducts v-if="!isDone" />
     <inputs-for-register v-else />
 
-    <orders-list />
+    <orders-list v-if="!isDone" />
   </q-page>
 </template>

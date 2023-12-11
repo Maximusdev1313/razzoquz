@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="bg-accent">
+    <q-header elevated class="bg-green">
       <q-bar class="bar">
         <q-icon name="phone" />
         <a href="tel:956432123" class="text-white">95 643 21 23</a>
@@ -13,7 +13,7 @@
         </div>
       </q-bar>
       <q-toolbar>
-        <!-- <q-btn
+        <q-btn
           flat
           dense
           round
@@ -21,7 +21,7 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
           color="white"
-        /> -->
+        />
         <div
           class="fit row justify-between items-center content-center no-wrap"
         >
@@ -38,7 +38,7 @@
               filled
               type="search"
               class="input_header"
-              bg-color="purple-3"
+              bg-color="green-3"
               dark
               color="white"
               label="Mahsulot qidirish"
@@ -70,7 +70,9 @@
 
     <q-drawer v-model="leftDrawerOpen" bordered>
       <!-- <drawerContent /> -->
-      <categories />
+      <Suspense>
+        <categories class="category" />
+      </Suspense>
     </q-drawer>
 
     <q-page-container>
@@ -159,6 +161,11 @@ function toggleLeftDrawer() {
 </script>
 
 <style scoped>
+.category {
+  background-color: rgb(14, 233, 25);
+  background-image: url("src/assets/hashtoq.png");
+  color: #fff;
+}
 .footer {
   height: 80px;
 }
@@ -177,7 +184,7 @@ function toggleLeftDrawer() {
   margin-left: 4px;
 }
 .dialog {
-  background-color: rgb(194, 63, 226);
+  background-color: rgb(63, 226, 131);
   padding: 2px 10px;
   border-radius: 2px;
   transition: 3s;

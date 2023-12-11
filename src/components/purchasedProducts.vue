@@ -143,7 +143,7 @@ const store = useApiStore();
   border: none;
   margin: 3px 0 3px 4px;
   color: #fff;
-  background: #1976d2;
+  background: #19d276;
   cursor: pointer;
 }
 .delete-button {

@@ -7,8 +7,9 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'order', component: () => import('pages/Order.vue') },
       { path: 'search', component: () => import('pages/SearchPage.vue') },
+      { path: 'all-products', component: () => import('pages/AllProducts.vue') },
       { path: 'wait-room', component: () => import('pages/WaitPage.vue') },
-      // { path: 'category/:id', component: () => import('pages/Categories.vue') },
+      { path: 'category/:id', component: () => import('pages/Categories.vue') },
     ]
   },
 

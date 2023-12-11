@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
 import { useApiStore } from "src/stores";
-import axios from "axios";
 const store = useApiStore();
 const categories = ref([]);
 onBeforeMount(async () => {
@@ -15,21 +14,32 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="">
-    <Suspense>
-      <q-list bordered separator>
-        <q-item
-          clickable
-          v-ripple
-          v-for="(category, index) in categories"
-          :key="index"
-          :to="'category/' + category"
-        >
-          <q-item-section>
-            <q-item-label>{{ category }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </Suspense>
+  <div class="list">
+    <q-list bordered separator>
+      <q-item>
+        <q-item-section>
+          <q-item-label class="title text-white q-py-md"
+            >Kategoriyalar</q-item-label
+          >
+        </q-item-section>
+      </q-item>
+      <q-item
+        clickable
+        v-ripple
+        v-for="category in categories"
+        :key="category"
+        :to="'/category/' + category"
+      >
+        <q-item-section>
+          <q-item-label class="text-subtitle1">{{ category }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
   </div>
 </template>
+
+<style scoped>
+/* .list {
+  background-color: aquamarine;
+} */
+</style>

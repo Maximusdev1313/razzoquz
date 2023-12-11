@@ -24,7 +24,6 @@ const postClientInfo = async () => {
       location: userLocation.value,
       created: Date.now(),
     });
-    console.log(response.data);
   } catch (error) {
     console.log(error.message);
   }
@@ -46,9 +45,7 @@ const postOrders = async () => {
           quantity: product.quantity,
         }
       );
-    } catch (error) {
-      console.log(error.message);
-    }
+    } catch (error) {}
   }
 };
 
@@ -83,11 +80,9 @@ async function callLocation() {
       }),
     ]);
     // handle result
-    console.log(userLocation.value);
     return result;
   } catch (error) {
     // handle error
-    console.log(error.message);
   }
 }
 const router = useRouter();
@@ -96,12 +91,15 @@ const changePath = () => {
   router.push("/wait-room");
 };
 
+let loading = ref(false);
 const sendOrder = async () => {
+  loading.value = true;
   await callLocation();
   await postClientInfo();
   await postOrders();
   changePath();
   localStorage.setItem("allow", true);
+  loading.value = false;
 };
 const alert = ref(localStorage.getItem("allow") ? false : true);
 </script>
@@ -184,7 +182,9 @@ const alert = ref(localStorage.getItem("allow") ? false : true);
           >Iltimos locatsiyani olish tugmasini bosing</q-tooltip
         >
       </q-btn> -->
-        <q-btn @click="sendOrder()" color="accent"> Buyurtma Berish </q-btn>
+        <q-btn @click="sendOrder()" color="green" :loading="loading">
+          Buyurtma Berish
+        </q-btn>
       </div>
     </q-form>
   </div>

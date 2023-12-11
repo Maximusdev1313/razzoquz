@@ -1,9 +1,8 @@
 <script setup>
 import { useApiStore } from "src/stores";
 import { onBeforeMount, ref } from "vue";
-// import animation from "src/components/animation.vue";
 import cards from "src/components/cards.vue";
-import animation from "src/components/animation.vue";
+import carusel from "src/components/carusel.vue";
 const store = useApiStore();
 const status = ref([]);
 
@@ -15,42 +14,68 @@ onBeforeMount(async () => {
   await store.getData("api/products");
   status.value = await store
     .filterItems("status", "special")
-    .then((app) => app);
+    .then((app) => app.splice(0, 8));
   category.value = await store
     .filterItems("category", "Yog'lar")
-    .then((app) => app.slice(0, 4));
+    .then((app) => app.slice(0, 6));
   tea.value = await store
     .filterItems("category", "Choylar")
-    .then((app) => app.slice(0, 4));
+    .then((app) => app.slice(0, 6));
   makaron.value = await store
     .filterItems("category", "Makaron mahsulotlari")
-    .then((app) => app.slice(0, 4));
+    .then((app) => app.slice(0, 6));
   parfum.value = await store
     .filterItems("category", "Parfumeriya mahsulotlari")
-    .then((app) => app.slice(0, 12));
+    .then((app) => app.splice(0, 8));
 });
 </script>
 
 <template>
   <q-page>
     <div>
-      <animation />
-      <div class="title q-ma-md">Sizga kerakli</div>
+      <carusel />
+      <div class="title q-ma-md text-black q-ma-md flex justify-between">
+        <span> Sizga kerakli </span>
+
+        <router-link to="/all-products" class="router"
+          >Barchasi <q-icon name="navigate_next" size="md" />
+        </router-link>
+      </div>
 
       <Suspense>
         <cards class="" :products="status" />
       </Suspense>
-      <div class="title q-ma-md">Yog'lar</div>
+      <div class="title text-black q-ma-md flex justify-between">
+        <span> Yog'lar </span>
+        <router-link to="/category/Yog'lar" class="router">
+          Ko'rish
+          <q-icon name="navigate_next" size="md" />
+        </router-link>
+      </div>
 
       <Suspense>
         <cards class="" :products="category" />
       </Suspense>
 
-      <div class="title q-ma-md">Choylar</div>
+      <div class="title text-black q-ma-md flex justify-between">
+        <span> Choylar </span>
+        <router-link to="/category/Choylar" class="router">
+          Ko'rish
+          <q-icon name="navigate_next" size="md" />
+        </router-link>
+      </div>
+
       <Suspense>
         <cards class="" :products="tea" />
       </Suspense>
-      <div class="title q-ma-md">Makaron mahsulotlari</div>
+
+      <div class="title text-black q-ma-md flex justify-between">
+        <span> Makaron mahsulotlari </span>
+        <router-link to="/category/Makaron%20mahsulotlari" class="router">
+          Ko'rish
+          <q-icon name="navigate_next" size="md" />
+        </router-link>
+      </div>
       <Suspense>
         <cards class="" :products="makaron" />
       </Suspense>
@@ -61,3 +86,12 @@ onBeforeMount(async () => {
     </div>
   </q-page>
 </template>
+
+<style scoped>
+.router {
+  font-weight: normal;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

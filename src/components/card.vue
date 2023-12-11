@@ -30,9 +30,9 @@ const { product } = toRefs(props);
         :alt="product.name"
         class="img"
         :ratio="16 / 9"
-        v-if="product.image"
+        v-if="product.image && product.image !== 'undefined'"
       />
-      <div v-else></div>
+      <div class="img" v-else></div>
     </div>
     <div class="title q-pa-sm text-weight-thin text-uppercase">
       {{ product.name }}
@@ -55,7 +55,7 @@ const { product } = toRefs(props);
       <q-btn
         class="card__button_add full-width q-mt-xl q-mb-sm"
         icon="shopping_cart"
-        color="accent"
+        color="green"
         size="sm"
         @click="
           store.addPurchasedProducts(product, store.incrementAmount(product))
